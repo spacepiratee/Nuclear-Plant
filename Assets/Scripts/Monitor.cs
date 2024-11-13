@@ -25,7 +25,7 @@ public class Monitor : PickableItems
       if (Input.GetKeyDown(KeyCode.Escape))
       {
          TurnOffMonitor();
-         LightManager.Instance.TurnOffLights();
+         // LightManager.Instance.TurnOffLights();
       }
    }
 

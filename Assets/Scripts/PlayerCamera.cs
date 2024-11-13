@@ -21,14 +21,22 @@ public class PlayerCamera : MonoBehaviour
    [SerializeField] public  float xRotation;
    [SerializeField] public float yRotation;
 
-   [Header("Shake")]
+   [Header("Virtual Camera")] 
    private CinemachineVirtualCamera _virtualCamera;
-   [SerializeField] private NoiseSettings camIdleNoise;
-   [SerializeField] private NoiseSettings camRunNoise;
+   
+   public NoiseSettings runNoise;
+   public NoiseSettings idleNoise;
    
    public bool canRotate;
 
    private Transform parent;
+   
+   [SerializeField] private AnimationCurve animationCurve;
+   private Vector3 cameraTransform;
+   private Vector3 cameraRotation;
+   
+   
+  
    private void Awake()
    {
       Instance = this;
@@ -36,17 +44,14 @@ public class PlayerCamera : MonoBehaviour
 
    private void Start()
    {
+      _virtualCamera = GetComponent<CinemachineVirtualCamera>();
       Application.targetFrameRate = 360;
       Cursor.lockState = CursorLockMode.Locked;
-      _virtualCamera = GetComponent<CinemachineVirtualCamera>();
-      //Cursor.visible = false;
 
       parent = transform.parent;
    }
    
-   [SerializeField] private AnimationCurve animationCurve;
-   private Vector3 cameraTransform;
-   private Vector3 cameraRotation;
+ 
    
    public void MoveCameraByItem(Vector3 pos, Vector3 rotation, float dur, Transform newParent)
    {
@@ -63,10 +68,7 @@ public class PlayerCamera : MonoBehaviour
    public void MoveCameraBack()
    {
       transform.DOLocalRotate(cameraRotation, 0.5f).SetEase(animationCurve);
-      transform.DOLocalMove(cameraTransform, 0.5f).SetEase(animationCurve).OnComplete(() =>
-      {
-         ResetParent();
-      });
+      transform.DOLocalMove(cameraTransform, 0.5f).SetEase(animationCurve).OnComplete(ResetParent);
    }
 
    public void ResetParent()
@@ -103,23 +105,28 @@ public class PlayerCamera : MonoBehaviour
       }
      
      
+      CheckForHeadBob();
 
    }
-   
 
 
-   public void Shake(Vector2 movement)
+   void CheckForHeadBob()
    {
-      if (movement == Vector2.zero)
+      var movement = PlayerMovement.Instance._moveDirection;
+
+      if (movement == Vector3.zero)
       {
-         // _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_NoiseProfile = camIdleNoise;
-         _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_NoiseProfile = camRunNoise;
-
-         _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 1;
-         return;
+         _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_NoiseProfile = idleNoise;
       }
-
-       _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_NoiseProfile = camRunNoise;
-       _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 3;
+      else
+      {
+         _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_NoiseProfile = runNoise;
+      }
    }
+
+  
+  
+ 
+   
+   
 }

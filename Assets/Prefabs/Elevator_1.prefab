@@ -332,12 +332,22 @@ PrefabInstance:
     - target: {fileID: 5688343808829069086, guid: f1298734d3172b54587c5a82b52198a1,
         type: 3}
       propertyPath: m_Name
-      value: ceiling_lamp_2 (1)
+      value: ceiling_lamp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738899968028577745, guid: f1298734d3172b54587c5a82b52198a1,
+        type: 3}
+      propertyPath: m_Type
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6738899968028577745, guid: f1298734d3172b54587c5a82b52198a1,
         type: 3}
       propertyPath: m_Range
-      value: 0.8
+      value: 3.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738899968028577745, guid: f1298734d3172b54587c5a82b52198a1,
+        type: 3}
+      propertyPath: m_SpotAngle
+      value: 51.884056
       objectReference: {fileID: 0}
     - target: {fileID: 6738899968028577745, guid: f1298734d3172b54587c5a82b52198a1,
         type: 3}
@@ -348,6 +358,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Lightmapping
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6738899968028577745, guid: f1298734d3172b54587c5a82b52198a1,
+        type: 3}
+      propertyPath: m_InnerSpotAngle
+      value: 29.584688
       objectReference: {fileID: 0}
     - target: {fileID: 6738899968028577745, guid: f1298734d3172b54587c5a82b52198a1,
         type: 3}
@@ -733,6 +748,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca81e0a9d05e3974a81cb08f539fd271, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentFloor: 0
+  ceiling: []
   rightDoor: {fileID: 2716685401385990240}
   leftDoor: {fileID: 2288030973481798700}
 --- !u!65 &4942571647914895328

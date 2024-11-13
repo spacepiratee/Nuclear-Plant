@@ -1,4 +1,4 @@
-using DG.Tweening;
+   using DG.Tweening;
 using UnityEngine;
 
 public class Elevator : MonoBehaviour
@@ -6,8 +6,6 @@ public class Elevator : MonoBehaviour
    [Header("Floor and Ceiling")] 
    public int currentFloor;
    public Ceiling[] ceiling;
-   
-   
    
    
    [Header("Door")]
@@ -65,6 +63,7 @@ public class Elevator : MonoBehaviour
    public void Move()
    {
       Close();
+      // PlayerMovement.Instance.isusing = true;
       if (currentFloor == 0)
       {
          Invoke(nameof(GoUp), 2.25f);
@@ -82,7 +81,7 @@ public class Elevator : MonoBehaviour
       ceiling[currentFloor].TurnOffMesh();
       ceiling[currentFloor].TurnOffCollider();
       
-      rb.DOMoveY(5.55f, 4).OnComplete(() =>
+      rb.DOMoveY(5.55f, 4).SetEase(Ease.OutQuad).SetUpdate(UpdateType.Fixed).OnComplete(() =>
       {
          Open();
          
@@ -103,7 +102,7 @@ public class Elevator : MonoBehaviour
       ceiling[currentFloor - 1].TurnOffMesh();
       ceiling[currentFloor - 1].TurnOffCollider();
       
-      rb.DOMoveY(1, 4).OnComplete(() =>
+      rb.DOMoveY(1, 4).SetEase(Ease.OutQuad).SetUpdate(UpdateType.Fixed).OnComplete(() =>
       {
          Open();
          

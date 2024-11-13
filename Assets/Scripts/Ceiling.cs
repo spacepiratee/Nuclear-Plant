@@ -6,13 +6,13 @@ using UnityEngine;
 
 public class Ceiling : MonoBehaviour
 {
-    private Collider _collider;
+    private BoxCollider _collider;
     private MeshRenderer _meshRenderer;
 
     [SerializeField] private Ceillamp[] lights;
     private void Start()
     {
-        _collider = GetComponent<Collider>();
+        _collider = GetComponent<BoxCollider>();
         _meshRenderer = GetComponent<MeshRenderer>();
     }
 

@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement Instance { get; private set; }
+    
     [Header("Movement")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private Transform orientation;
     private float _horizontalInput;
     private float _verticalInput;
-    private Vector3 _moveDirection;
+    public Vector3 _moveDirection;
     
     [Header("Jumping")]
     [SerializeField] private float jumpForce;
@@ -31,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
         _rb = GetComponent<Rigidbody>();
     }
 
@@ -76,10 +79,16 @@ public class PlayerMovement : MonoBehaviour
         // }
     }
 
+    public bool isusing;
     void MovePlayer()
     {
+        
         _moveDirection = orientation.forward * _verticalInput + orientation.right * _horizontalInput;
 
+        if (isusing)
+        {
+            return;
+        }
         if (isGrounded)
         {
             _rb.AddForce(_moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
