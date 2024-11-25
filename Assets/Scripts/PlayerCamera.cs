@@ -105,28 +105,35 @@ public class PlayerCamera : MonoBehaviour
       }
      
      
-      CheckForHeadBob();
+      LerpNoiseSettings();
 
    }
 
+   [SerializeField] private NoiseSettings noiseSetting;
+   [SerializeField] private Vector3 movement;
+  
 
-   void CheckForHeadBob()
+   public bool canLerpIdle;
+   public bool canLerpWalk;
+
+
+   void LerpNoiseSettings()
    {
-      var movement = PlayerMovement.Instance._moveDirection;
+      movement = PlayerMovement.Instance._moveDirection;
 
       if (movement == Vector3.zero)
       {
-         _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_NoiseProfile = idleNoise;
+         noiseSetting.OrientationNoise[0].X.Amplitude = Mathf.Lerp(noiseSetting.OrientationNoise[0].X.Amplitude, 0, Time.deltaTime * 4);
+         noiseSetting.OrientationNoise[0].Z.Amplitude = Mathf.Lerp(noiseSetting.OrientationNoise[0].Z.Amplitude, 0, Time.deltaTime * 4);
       }
       else
       {
-         _virtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_NoiseProfile = runNoise;
+         noiseSetting.OrientationNoise[0].X.Amplitude = Mathf.Lerp(noiseSetting.OrientationNoise[0].X.Amplitude, 1, Time.deltaTime * 4);
+         noiseSetting.OrientationNoise[0].Z.Amplitude = Mathf.Lerp(noiseSetting.OrientationNoise[0].Z.Amplitude, 0.5f, Time.deltaTime * 4);
       }
+      
    }
-
-  
-  
- 
+   
    
    
 }

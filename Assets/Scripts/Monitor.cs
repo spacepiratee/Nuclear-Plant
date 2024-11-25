@@ -10,10 +10,7 @@ public class Monitor : PickableItems
    public bool canChangeCamera;
    private bool _isUsing;
 
-   private void Start()
-   {
-   }
-
+   [SerializeField] private WorldCanvas _worldCanvas;
 
    private void Update()
    {
@@ -98,8 +95,18 @@ public class Monitor : PickableItems
       LightManager.Instance.TurnOnLights();
    }
 
+   public override void GetPointedOver()
+   {
+      _worldCanvas.SetCanvas(true);
+   }
+
+   public override void NotGettingPointed()
+   {
+      _worldCanvas.SetCanvas(false);
+   }
+
    public void UpdateQuest()
    {
-      
+
    }
 }

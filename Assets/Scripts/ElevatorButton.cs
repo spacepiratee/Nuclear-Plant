@@ -13,8 +13,10 @@ public class ElevatorButton : PickableItems
     }
 
     [SerializeField] private Button button;
-    [SerializeField] private Transform targetObj;
     private Elevator _elevator;
+
+    [SerializeField] private WorldCanvas _worldCanvas;
+    
     private void Start()
     {
         switch (button)
@@ -27,53 +29,8 @@ public class ElevatorButton : PickableItems
                 break;
         }
         
-        targetObj = transform.GetChild(0);
     }
-
-    public void Tween(PlayerCamera playerCamera, Vector3 originalPos, Quaternion originalRotation, Transform parent)
-    {
-        switch (button)
-        {
-            case Button.Out:
-                targetObj.SetParent(null);
-                playerCamera.canRotate = false;
-                
-                targetObj.SetParent(parent);
-
-                playerCamera.transform.DOLocalRotateQuaternion(targetObj.transform.localRotation, 0.5f).OnComplete(() =>
-                {
-                    playerCamera.transform.DOLocalRotateQuaternion(originalRotation, 0.5f);
-                });
-
-                playerCamera.transform.DOLocalMove(targetObj.transform.localPosition, 0.5f).OnComplete(() =>
-                {
-                    //playerCamera.transform.DOShakePosition(0.5f, Vector3.up, 5, 45);
-                    playerCamera.transform.DOLocalMove(originalPos, 0.5f).OnComplete(() =>
-                    {
-                        playerCamera.canRotate = true;
-                        targetObj.transform.SetParent(transform);
-                        targetObj.SetAsFirstSibling();
-                        _elevator.Interact();
-                    });
-                });
-                break;
-            case Button.In:
-                targetObj.SetParent(null);
-                playerCamera.canRotate = false;
-                
-                targetObj.SetParent(parent);
-
-                playerCamera.transform.DOLocalRotateQuaternion(targetObj.transform.localRotation, 0.5f).OnComplete(() =>
-                {
-                    playerCamera.transform.DOLocalRotateQuaternion(originalRotation, 0.5f);
-                    targetObj.transform.SetParent(transform);
-                    targetObj.SetAsFirstSibling();
-                });
-                
-                break;
-        }
-       
-    }
+    
 
     public override void GetPicked(Transform parentTransform)
     {
@@ -86,5 +43,15 @@ public class ElevatorButton : PickableItems
                 _elevator.Move();
                 break;
         }
+    }
+
+    public override void GetPointedOver()
+    {
+        _worldCanvas.SetCanvas(true);
+    }
+
+    public override void NotGettingPointed()
+    {
+        _worldCanvas.SetCanvas(false);
     }
 }

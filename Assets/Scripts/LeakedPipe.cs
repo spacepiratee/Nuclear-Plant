@@ -72,4 +72,14 @@ public class LeakedPipe : PickableItems
         Invoke(nameof(RotateValve), 1.25f);
         // RotateValve();
     }
+
+    public override void GetPointedOver()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void NotGettingPointed()
+    {
+        throw new NotImplementedException();
+    }
 }

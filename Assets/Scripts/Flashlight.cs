@@ -11,6 +11,7 @@ public class Flashlight : PickableItems
     private Collider collider;
     private Rigidbody rb;
 
+    [SerializeField] private WorldCanvas _worldCanvas;
 
     private void Start()
     {
@@ -46,5 +47,15 @@ public class Flashlight : PickableItems
             
         transform.localPosition = pickupObject.localPosition;
         transform.localRotation = pickupObject.localRotation;
+    }
+
+    public override void GetPointedOver()
+    {
+        _worldCanvas.SetCanvas(true);
+    }
+
+    public override void NotGettingPointed()
+    {
+        _worldCanvas.SetCanvas(false);
     }
 }

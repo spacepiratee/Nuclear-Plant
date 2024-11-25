@@ -13,4 +13,14 @@ public class Keycard : PickableItems
     {
         PlayerInventory.Instance.AddItem(this);
     }
+
+    public override void GetPointedOver()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void NotGettingPointed()
+    {
+        throw new System.NotImplementedException();
+    }
 }

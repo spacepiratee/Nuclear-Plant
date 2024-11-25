@@ -16,7 +16,8 @@ public class Door : PickableItems
 
     [Header("Components")]
     private BoxCollider _boxCollider;
-    
+
+    [SerializeField] private WorldCanvas worldCanvas;
     
 
     private void Start()
@@ -95,5 +96,15 @@ public class Door : PickableItems
     public override void GetPicked(Transform parentTransform)
     {
         Interact();
+    }
+
+    public override void GetPointedOver()
+    {
+        worldCanvas.SetCanvas(true);
+    }
+
+    public override void NotGettingPointed()
+    {
+        worldCanvas.SetCanvas(false);
     }
 }

@@ -26,6 +26,7 @@ public class Raycaster : MonoBehaviour
 
         if (highlight != null)
         {
+            highlight.gameObject.GetComponent<PickableItems>().NotGettingPointed();
             highlight.gameObject.GetComponent<Outline>().enabled = false;
             highlight = null;
         }
@@ -38,19 +39,15 @@ public class Raycaster : MonoBehaviour
             
             if (highlight.gameObject.CompareTag("Highlightable"))
             {
-                Debug.Log("Hit " + highlight.name);
-                CursorUI.Instance.SetHighlighted();
-
-                
                 if (highlight.gameObject.GetComponent<Outline>() != null)
                 {
                     highlight.gameObject.GetComponent<Outline>().enabled = true;
+                    highlight.gameObject.GetComponent<PickableItems>().GetPointedOver();
                 }
             }
             else
             {
                 highlight = null;
-                CursorUI.Instance.SetNormal();
             }
         }
 
